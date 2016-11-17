@@ -1,0 +1,144 @@
+/*UNIVERSIDAD TECNICA DEL NORTE
+FICA - CIERCOM
+SISTEMAS MICROPROCESADOS
+NOMBRE: LEANDRO FELIPE NOGUERA LOMAS - EDER WALDIMIR CABASCANGO VELASQUEZ
+DEBER 3 EJERCICIO 2
+Realizar un contador mediante un pulsador de 0-99, se observa en displays.
+*/
+//declaracion de variables 
+int decenas=9;
+int unidades=8;
+int contador=0;
+int valor_decena=0;
+int valor_unidad=0;
+int A=13;
+int B=12;
+int C=11;
+int D=10;
+int pulsador=7;
+int ac=0;
+void setup() {
+
+  pinMode(A,OUTPUT);//pin 13 como salida
+  pinMode(B,OUTPUT);//pin 12 como salida
+  pinMode(C,OUTPUT);//pin 11 como salida
+  pinMode(D,OUTPUT);//pin 10 como salida
+  pinMode(unidades,OUTPUT);//pin 8 como salida
+  pinMode(decenas,OUTPUT);//pin 9 como salida
+  pinMode(pulsador,INPUT);
+  // put your setup code here, to run once:
+
+}
+//clase codigo de numeros del 1 al 9 
+void contador_display(int numero)
+{
+  switch(numero){
+    case 0:
+  
+   //0
+  digitalWrite(A,LOW);
+  digitalWrite(B,LOW);
+  digitalWrite(C,LOW);
+  digitalWrite(D,LOW); 
+  break;
+  case 1:
+     //1
+  digitalWrite(A,HIGH);
+  digitalWrite(B,LOW);
+  digitalWrite(C,LOW);
+  digitalWrite(D,LOW);
+break;
+case 2:
+//2
+  digitalWrite(A,LOW);
+  digitalWrite(B,HIGH);
+  digitalWrite(C,LOW);
+  digitalWrite(D,LOW);
+break;
+case 3:
+//3
+  digitalWrite(A,HIGH);
+  digitalWrite(B,HIGH);
+  digitalWrite(C,LOW);
+  digitalWrite(D,LOW);
+break;
+case 4:
+//4
+
+  digitalWrite(A,LOW);
+  digitalWrite(B,LOW);
+  digitalWrite(C,HIGH);
+  digitalWrite(D,LOW);
+break;
+case 5:
+//5
+
+  digitalWrite(A,HIGH);
+  digitalWrite(B,LOW);
+  digitalWrite(C,HIGH);
+  digitalWrite(D,LOW);
+  break;
+  case 6:
+//6
+
+  digitalWrite(A,LOW);
+  digitalWrite(B,HIGH);
+  digitalWrite(C,HIGH);
+  digitalWrite(D,LOW);
+break;
+case 7:  
+//7
+
+  digitalWrite(A,HIGH);
+  digitalWrite(B,HIGH);
+  digitalWrite(C,HIGH);
+  digitalWrite(D,LOW);
+  break;
+  case 8:
+//8
+
+  digitalWrite(A,LOW);
+  digitalWrite(B,LOW);
+  digitalWrite(C,LOW);
+  digitalWrite(D,HIGH);
+  break;
+  case 9:
+//9
+
+  digitalWrite(A,HIGH);
+  digitalWrite(B,LOW);
+  digitalWrite(C,LOW);
+  digitalWrite(D,HIGH);
+  break;
+
+  }
+  }
+void loop() {
+  //condicion para que el acumulador vaya incrementando dependiendo de las pulsaciones del boton (HIGH)
+if(digitalRead(pulsador)==HIGH)
+{
+  if(contador<=99){
+  contador=contador+1;
+valor_decena=contador/10;
+  valor_unidad= contador-(valor_decena*10);
+  digitalWrite(unidades,HIGH);
+  digitalWrite(decenas,LOW);
+  contador_display(valor_unidad);
+  delay(100);
+  digitalWrite(unidades,LOW);
+  digitalWrite(decenas,HIGH);  
+  contador_display(valor_decena);
+ delay(250);
+  }
+  else
+  {
+    contador=0;
+    
+    }
+}
+ 
+//imprimir dato
+
+  // put your main code here, to run repeatedly:
+
+}
