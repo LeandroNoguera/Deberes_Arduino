@@ -1,0 +1,111 @@
+//SISTEMAS MICROPROCESADOS
+// *********UTN************
+//NOGUERA LOMAS LEANDRO FELPE
+//Se ingresa una palabra en el terminal y al precionar cualquiera de los switchs se activará el juego de luces
+// juego sw1 = las letras de la palabra se colocan en la primera fila y se borran para aparecer en la fila de abajo
+// juego sw2 = aparece en forma diagonal desde la primera fila y tambien por la segunda
+// juego sw3 = la palabra se traslada desde la posicion 0 hasta la posicion 16 de las 2 filas en el lcd
+#include <LiquidCrystal.h>
+LiquidCrystal lcd (13, 12, 11, 10, 9, 8); //rs, e, d4, d5, d6, d7
+//VARIABLES A UTILIZAR
+int sw1 = 1;
+int sw2 = 2;
+int sw3 = 3;
+int i = 0;
+int j = 0;
+int tam = 0;
+String dato;
+char ciclo;
+
+void setup() {
+  lcd.begin(16, 2);
+  Serial.begin(9600);
+}
+
+void loop() {
+
+  if (Serial.available() > 0) {
+    dato = Serial.readString();
+    tam = (dato.length() + 1);
+    char mensaje[tam];
+    dato.toCharArray (mensaje, tam); //vector,tamaño de la palabra
+
+    if (digitalRead(sw1) == HIGH)
+    {
+      //*******PRIMER JUEGO DE LUCES**************
+
+      int i = 0;
+      int j = 0;
+      char mensaje3[tam];
+      dato.toCharArray(mensaje3, tam + 1);
+      for (; i < tam; i++) {
+        j = 1 - j;
+        lcd.setCursor(i, j);
+        lcd.print(mensaje3[i]);
+        delay(200);
+        lcd.setCursor(i, j);
+        lcd.print(' ');
+      }
+      for (; i >= 0; i--) {
+        j = 1 - j;
+        lcd.setCursor(i, j);
+        lcd.print(mensaje3[i]);
+        delay(200);
+        lcd.setCursor(i, j);
+        lcd.print(" ");
+      }
+      lcd.clear();
+    }//Limpia la pantalla del LCD
+    ///////////////////////////////////////////////
+    if (digitalRead(sw2) == HIGH)
+    {
+
+      //*******SEGUNDO JUEGO DE LUCES**************
+      for (i; i <= tam; i++) {
+        lcd.setCursor(i, 1);
+        lcd.print(' ');
+        lcd.setCursor(i, 1);
+        lcd.print(mensaje[i]);
+        delay(50);
+      }
+
+      for (i; i <= tam; i++)
+      {
+        lcd.setCursor(i, 1);
+        lcd.print(' ');
+        lcd.setCursor(i, 1);
+        lcd.print(mensaje[i]);
+        delay(50);
+      }
+      i = 0;
+      lcd.clear();
+      ///////////////////////
+
+    }
+
+    if (digitalRead(sw3) == HIGH)
+    {
+
+      //*******TERCER JUEGO DE LUCES**************
+
+      for (i; i < tam; i++)
+      {
+        j = 1 - j;
+        lcd.setCursor(2, 2);
+        lcd.print(' ');
+        delay(200);
+      }
+      for (i; i >= 0; i--)
+      {
+        j = 1 - j;
+        lcd.setCursor( 2, 2);
+        lcd.print(mensaje[i]);
+        delay(200);
+      }
+      i = 0;
+      j = 0;
+      lcd.clear();
+      /////////////////
+    }
+  }
+}
